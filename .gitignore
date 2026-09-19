@@ -1,0 +1,32 @@
+.env
+
+# Runtime configuration and credentials
+cpa/config.yaml
+cpa/auths/*
+!cpa/auths/.gitkeep
+cpa/logs/*
+!cpa/logs/.gitkeep
+cpa/plugins/*
+!cpa/plugins/.gitkeep
+
+# TLS private material and downloaded Cloudflare CA
+nginx/ssl/*
+!nginx/ssl/.gitkeep
+
+# Runtime data
+data/*
+!data/new-api/
+data/new-api/*
+!data/new-api/.gitkeep
+logs/*
+!logs/new-api/
+logs/new-api/*
+!logs/new-api/.gitkeep
+backups/*
+!backups/.gitkeep
+
+# Local tooling
+.DS_Store
+.idea/
+.vscode/
+*.swp

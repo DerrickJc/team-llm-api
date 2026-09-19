@@ -1,0 +1,35 @@
+host: "0.0.0.0"
+port: 8317
+
+tls:
+  enable: false
+  cert: ""
+  key: ""
+
+remote-management:
+  # Required for access through the host-loopback SSH tunnel. Port 8317 is
+  # bound to 127.0.0.1 only in compose.yaml and still requires this key.
+  allow-remote: true
+  secret-key: "__CPA_MANAGEMENT_KEY__"
+  disable-control-panel: false
+
+auth-dir: "~/.cli-proxy-api"
+
+api-keys:
+  - "__CPA_API_KEY__"
+
+debug: false
+logging-to-file: true
+logs-max-total-size-mb: 200
+usage-statistics-enabled: false
+
+request-retry: 3
+max-retry-interval: 30
+
+routing:
+  strategy: "round-robin"
+
+ws-auth: true
+streaming:
+  keepalive-seconds: 15
+  bootstrap-retries: 1
