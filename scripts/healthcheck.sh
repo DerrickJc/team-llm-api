@@ -45,6 +45,8 @@ for ((attempt = 1; attempt <= attempts; attempt++)); do
 done
 
 cpa_api_key="$(env_value CPA_API_KEY)"
+# $1 is intentionally expanded by the inner container shell.
+# shellcheck disable=SC2016
 compose exec -T new-api sh -ec \
   'wget -qO- --header="Authorization: Bearer $1" http://cpa:8317/v1/models >/dev/null' \
   sh "$cpa_api_key"

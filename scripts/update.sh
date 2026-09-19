@@ -55,10 +55,7 @@ require_runtime_config
 rollback_env="$(mktemp "${PROJECT_ROOT}/.env.rollback.XXXXXX")"
 cp "$ENV_FILE" "$rollback_env"
 chmod 600 "$rollback_env"
-cleanup() {
-  rm -f "$rollback_env"
-}
-trap cleanup EXIT
+trap 'rm -f "$rollback_env"' EXIT
 
 set_env_value() {
   local key="$1"
