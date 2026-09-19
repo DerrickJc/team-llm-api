@@ -14,8 +14,8 @@
 ## 2. 初始化仓库
 
 ```bash
-git clone https://github.com/YOUR_NAME/team-llm-gateway.git
-cd team-llm-gateway
+git clone https://github.com/DerrickJc/team-llm-api.git
+cd team-llm-api
 ./scripts/setup.sh api.example.com
 ```
 

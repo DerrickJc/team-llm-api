@@ -1,4 +1,4 @@
-# Team LLM Gateway
+# Team LLM API
 给小伙伴、小团队搭建一个api中转站的教程
 
 面向 3～10 人小团队的单机、自托管 LLM 中转站。它把 New API 作为团队入口和配额层，把 CLIProxyAPI（CPA）作为上游 OAuth/Provider 适配层，并补齐安全默认值、备份、恢复和可控升级。
@@ -63,8 +63,8 @@ flowchart TD
 ### 1. 初始化配置
 
 ```bash
-git clone https://github.com/YOUR_NAME/team-llm-gateway.git
-cd team-llm-gateway
+git clone https://github.com/DerrickJc/team-llm-api.git
+cd team-llm-api
 ./scripts/setup.sh api.example.com
 ```
 
@@ -147,7 +147,7 @@ make stop                # 停止服务
 恢复备份：
 
 ```bash
-./scripts/restore.sh backups/team-llm-gateway-YYYYMMDDTHHMMSSZ.tar.gz --confirm
+./scripts/restore.sh backups/team-llm-api-YYYYMMDDTHHMMSSZ.tar.gz --confirm
 ```
 
 详细流程与限制见 [运维手册](docs/operations.md)。

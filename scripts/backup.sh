@@ -27,7 +27,7 @@ fi
 mkdir -p "$backup_dir"
 
 timestamp="$(date -u +%Y%m%dT%H%M%SZ)"
-archive="${backup_dir}/team-llm-gateway-${timestamp}.tar.gz"
+archive="${backup_dir}/team-llm-api-${timestamp}.tar.gz"
 temporary="$(mktemp -d "${backup_dir}/.backup.XXXXXX")"
 trap 'rm -rf "$temporary"' EXIT
 payload="${temporary}/payload"
@@ -52,7 +52,7 @@ cp -a "${PROJECT_ROOT}/data/new-api" "${payload}/new-api/data"
 
 {
   printf 'created_at=%s\n' "$timestamp"
-  printf 'project=team-llm-gateway\n'
+  printf 'project=team-llm-api\n'
   printf 'new_api_version=%s\n' "$(env_value NEW_API_VERSION)"
   printf 'cpa_version=%s\n' "$(env_value CPA_VERSION)"
   printf 'postgres_version=%s\n' "$(env_value POSTGRES_VERSION)"
@@ -65,7 +65,7 @@ sha256sum "$archive" >"${archive}.sha256"
 chmod 600 "$archive" "${archive}.sha256"
 
 find "$backup_dir" -maxdepth 1 -type f \
-  \( -name 'team-llm-gateway-*.tar.gz' -o -name 'team-llm-gateway-*.tar.gz.sha256' \) \
+  \( -name 'team-llm-api-*.tar.gz' -o -name 'team-llm-api-*.tar.gz.sha256' \) \
   -mtime "+${retention_days}" -delete
 
 log "backup written to ${archive}"

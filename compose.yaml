@@ -1,4 +1,4 @@
-name: team-llm-gateway
+name: team-llm-api
 
 services:
   nginx:
@@ -44,7 +44,7 @@ services:
       FRONTEND_BASE_URL: https://${DOMAIN}
       ERROR_LOG_ENABLED: "true"
       BATCH_UPDATE_ENABLED: "true"
-      NODE_NAME: team-llm-gateway
+      NODE_NAME: team-llm-api
       TZ: ${TZ:-Asia/Shanghai}
     volumes:
       - ./data/new-api:/data

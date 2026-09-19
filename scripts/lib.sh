@@ -6,11 +6,11 @@ PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ENV_FILE="${PROJECT_ROOT}/.env"
 
 log() {
-  printf '[team-llm-gateway] %s\n' "$*"
+  printf '[team-llm-api] %s\n' "$*"
 }
 
 die() {
-  printf '[team-llm-gateway] ERROR: %s\n' "$*" >&2
+  printf '[team-llm-api] ERROR: %s\n' "$*" >&2
   exit 1
 }
 

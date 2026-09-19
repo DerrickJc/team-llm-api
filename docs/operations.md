@@ -36,7 +36,7 @@ PUBLIC_CHECK=0 ./scripts/healthcheck.sh
 每天 03:00 备份的 cron 示例：
 
 ```cron
-0 3 * * * cd /opt/team-llm-gateway && ./scripts/backup.sh >> /var/log/team-llm-gateway-backup.log 2>&1
+0 3 * * * cd /opt/team-llm-api && ./scripts/backup.sh >> /var/log/team-llm-api-backup.log 2>&1
 ```
 
 默认保留 7 天，可在 `.env` 修改 `BACKUP_RETENTION_DAYS`。这只清理 `BACKUP_DIR` 顶层、符合项目命名规则的归档和校验文件。
@@ -44,7 +44,7 @@ PUBLIC_CHECK=0 ./scripts/healthcheck.sh
 ## 恢复到当前主机
 
 ```bash
-./scripts/restore.sh backups/team-llm-gateway-20260919T030000Z.tar.gz --confirm
+./scripts/restore.sh backups/team-llm-api-20260919T030000Z.tar.gz --confirm
 ```
 
 脚本会：
