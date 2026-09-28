@@ -594,40 +594,11 @@ make stop
 
 备份文件本身包含全部秘密，默认保存到 `backups/` 并保留 7 天。至少再复制一份到加密的异地主机或对象存储。
 
-### 恢复
 
-```bash
-./scripts/restore.sh backups/team-llm-api-YYYYMMDDTHHMMSSZ.tar.gz --confirm
-```
 
-恢复脚本会先生成当前环境的安全备份，然后停止请求服务、恢复数据库和文件、重新启动并执行健康检查。首次正式使用前应在测试机演练一次。
-
-### 升级
-
-不要直接把镜像版本改成 `latest`。阅读 New API 和 CPA Release Notes 后执行：
-
-```bash
-./scripts/update.sh --new-api v1.0.0-rc.39 --cpa v7.3.8
-```
-
-只传需要升级的参数即可。脚本会先备份，再修改固定版本、拉取镜像、启动并检查健康；失败时会尝试恢复旧标签。数据库发生不兼容迁移时仍需使用升级前备份恢复。
-
-详细说明见 [运维手册](docs/operations.md)。
 
 ## 常见问题
 
-### 推送 GitHub 时提示 `fetch first`
-
-远端已有提交，先查看并整合远端历史：
-
-```bash
-git fetch origin
-git log --oneline --graph --decorate --all -20
-git pull --rebase origin main
-git push -u origin main
-```
-
-如果本地和远端是两个无关历史，不要直接 `push --force`。先备份分支，再通过 merge 或 rebase 明确解决冲突。
 
 ### Cloudflare 显示 525、526 或源站错误
 
@@ -649,11 +620,6 @@ git push -u origin main
 docker compose --env-file .env logs --tail=200 cpa new-api
 ```
 
-### 非流式请求超时
-
-Cloudflare 对回源读取有超时限制。模型客户端优先开启流式响应。本仓库已为 SSE 和长连接关闭 Nginx 代理缓冲，并配置 CPA keepalive，但无法取消 Cloudflare 套餐自身限制。
-
-更多故障场景见 [故障排查](docs/troubleshooting.md)。
 
 ## 仓库结构
 
@@ -687,13 +653,8 @@ Cloudflare 对回源读取有超时限制。模型客户端优先开启流式响
 └── .github/workflows/           # PR 静态校验
 ```
 
-`.env`、CPA OAuth 文件、运行配置、TLS 私钥、日志、数据和备份都已加入 `.gitignore`。提交前仍应执行 `git status`，确认没有秘密进入暂存区。
+`.env`、CPA OAuth 文件、运行配置、TLS 私钥、日志、数据和备份都已加入 `.gitignore`。
 
-## 设计边界
-
-该方案使用单 VPS、单 PostgreSQL 和单 Redis，主机故障会造成停机。Redis 作为可丢弃缓存，PostgreSQL 和 CPA OAuth 文件是灾难恢复核心。需要多节点、高可用、集中审计、SSO、Vault 或跨区域灾备时，应在此方案之上单独设计，不建议直接把这些组件堆进小团队第一版。
-
-方案审查和取舍见 [docs/review.md](docs/review.md)。
 
 ## 参与维护
 
