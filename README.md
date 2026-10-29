@@ -8,8 +8,6 @@
 
 
 
-> [!WARNING]
-> 本项目适合个人和小团队自用，不提供高可用或企业 SLA。当前固定的 New API `v1.0.0-rc.38` 是预发布版本，其发布说明不建议直接用于生产环境。部署前请确认相关上游服务条款，并定期生成和异地保存备份。
 
 ## 目录
 
@@ -30,22 +28,7 @@
 - [常见问题](#常见问题)
 - [仓库结构](#仓库结构)
 
-## 完成后的架构
 
-```mermaid
-flowchart TD
-    U[团队成员<br/>每人独立账号和 Token] --> CF[Cloudflare<br/>Proxy + Full strict + AOP]
-    CF --> N[Nginx :443]
-    N --> A[New API<br/>用户 / 配额 / 日志 / 路由]
-    A --> C[CLIProxyAPI<br/>仅内网]
-    C --> P1[Codex OAuth]
-    C --> P2[Gemini / Claude / 其他 Provider]
-    A --> PG[(PostgreSQL)]
-    A --> R[(Redis)]
-    O[管理员] -. SSH Tunnel .-> C
-```
-
-公网只发布 Nginx 的 `80/443`。CPA 的 `8317` 只绑定宿主机 `127.0.0.1`，供管理员通过 SSH 隧道访问。New API 的 `3000`、PostgreSQL 的 `5432` 和 Redis 的 `6379` 均不发布到宿主机。
 
 ## 这套方案能做什么
 
@@ -656,23 +639,6 @@ docker compose --env-file .env logs --tail=200 cpa new-api
 `.env`、CPA OAuth 文件、运行配置、TLS 私钥、日志、数据和备份都已加入 `.gitignore`。
 
 
-## 参与维护
-
-提交 PR 前运行：
-
-```bash
-make validate
-```
-
-版本更新应同步修改 `.env.example` 和 `CHANGELOG.md`，并在测试环境完成一次备份与恢复演练。详细约定见 [CONTRIBUTING.md](CONTRIBUTING.md)。
-
-## 参考资料
-- [Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
-- [Cloudflare Origin CA](https://developers.cloudflare.com/ssl/origin-configuration/origin-ca/)
-- [Cloudflare Authenticated Origin Pulls](https://developers.cloudflare.com/ssl/origin-configuration/authenticated-origin-pull/)
-- [New API 文档](https://docs.newapi.pro/)
-- [New API Releases](https://github.com/QuantumNous/new-api/releases)
-- [CLIProxyAPI Releases](https://github.com/router-for-me/CLIProxyAPI/releases)
 
 ## License
 
